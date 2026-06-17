@@ -68,23 +68,28 @@
                 <input type="date" id="eventDate" required> 
                 <br><br>
                 <label for="phone number">Phone Number:</label>
-                <input type="text" id="phone" onblur="ValidiatePhone()">
+                <input type="text" id="phone" onblur="ValidatePhone()">
                 <br><br>
                 <label for="eventType">Event Type:</label>
-                <select id="eventType" required>
+                <select id="eventType" onchange="showfee()" required>
                     <option value="">Select an Event</option>
-                    <option value="clean-up">Community Clean-Up Drive</option>
-                    <option value="picnic">Community Picnic</option>
-                    <option value="fundraiser">Community Fundraiser</option>
-                    <option value="workshop">Community Workshop</option>
-                    <option value="meeting">Community Meeting</option>
-                    <option value="social">Community Social</option>
+                    <option value="300">Community Clean-Up Drive</option>
+                    <option value="100">Community Picnic</option>
+                    <option value="200">Community Fundraiser</option>
+                    <option value="400">Community Workshop</option>
+                    <option value="500">Community Meeting</option>
+                    <option value="600">Community Social</option>
                 </select>
+                <p id="feedisplay"></p>
                 <br><br>
                 <label for="message">Message:</label>
                 <br>
                 <textarea id="message" placeholder="Enter your message" required>
                 </textarea>
+                <textarea id="feedbacktext" onKeyup="countCharacters()"></textarea>
+                <p> Characters: <span id="charCount">0</span></p>
+                <button type="button" onclick="showConfirmation()">Submit feedback</button>
+                <p id="feedbackConfirmation"></p>
                 <button type="submit">Register </button>
                 <br><br>
                 <output id="confirmation"></output>
@@ -96,7 +101,7 @@
             <tr>
                 <td>
                     <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSePdo08x5Ma2ya2ZruX8oCzd61G9HhbvXpFqSp55BBvQQrLdOp" width="150" height="150" alt="Event Image" title="Community Clean-Up Drive"
-     class="eventImage">
+     class="eventImage" ondblclick="enlargeImage(this)">
      <p>Community Clean-Up Drive</p>
                 </td>
                 <td>
@@ -105,7 +110,7 @@
      <p>Community Picnic</p>
                 </td>
                 <td>
-                    <img src="https://images.ctfassets.net/hrltx12pl8hq/5596z2BCR9KmT1KeRBrOQa/4070fd4e2f1a13f71c2c46afeb18e41c/shutterstock_451077043-hero1.jpg?" ; width="150" height="150" alt="Event Image" title="Community Fundraiser"
+                    <img src="https://images.ctfassets.net/hrltx12pl8hq/5596z2BCR9KmT1KeRBrOQa/4070fd4e2f1a13f71c2c46afeb18e41c/shutterstock_451077043-hero1.jpg?"  width="150" height="150" alt="Event Image" title="Community Fundraiser"
      class="eventImage">
      <p>Community Fundraiser</p>
                 </td>
@@ -128,9 +133,45 @@
                 </td>
             </tr>
         </table>
+        <section>
+            <video width="200" controls oncanplay="videoReady()">
+                <source src="eventpromo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p id="videoMessage"></p>
+        </section>
         <!--footer content-->
         <footer>
             <p>&copy; 2026 Local city council</p>
         </footer>
+        <script>
+            function ValidatePhone(){
+                let phone=document.getElementById("phone").value;
+                if(phone.length!=10){
+                    alert("phone number must contain 10 digits");
+                }
+            }
+            function showfee(){
+                let fee=document.getElementById("eventType").value;
+                document.getElementById("feedisplay").innerHTML="Event fee: $"+fee;
+            }
+            function showConfirmation(){
+                document.getElementById("feedbackConfirmation").innerHTML="feedback submitted successfully";
+            }
+            function enlargeImage(img){
+                img.width=300;
+                img.height=300;
+            }
+            function countCharacters(){
+                let count=document.getElementById("feedbacktext").value.length;
+                document.getElementById("charCount").innerHTML=count;
+            }
+            function videoReady(){
+                document.getElementById("videoMessage").innerHTML="video ready to play";
+            }
+            window.onbeforeunload=function(){
+                return "you have unsaved changes.";
+            };
+        </script>
     </body>
 </html>
